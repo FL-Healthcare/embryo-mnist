@@ -1,0 +1,19 @@
+- name: Add NVIDIA package repositories
+  hosts: "*"
+  tasks:
+    - name: "Install TensorRT. Requires that libcudnn8 is installed above."
+      shell: 'apt-get install -y --no-install-recommends libnvinfer7=7.1.3-1+cuda11.0 \
+              libnvinfer-dev=7.1.3-1+cuda11.0 \
+              libnvinfer-plugin7=7.1.3-1+cuda11.0'
+      become: true
+
+    - name: "Fix missing install of cuda-11-2 and libcusolver-11-0"
+      shell: 'apt-get install cuda-11-2 libcusolver-11-0'
+      become: true
+
+    - name: "Export environment variable"
+      shell: 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:/usr/local/cuda-11.0/lib64'
+
+    - name: "Print message to user"
+      ansible.builtin.debug:
+        msg: "* Check that GPUs are visible using the command: nvidia-smi *"

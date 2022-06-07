@@ -1,0 +1,7 @@
+sympy 
+jupyterlab-nvdashboard
+sklearn
+tqdm
+torch
+wget
+torchvision
